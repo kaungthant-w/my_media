@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pizza Order System</title>
+  <title>My Media App</title>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <link rel="stylesheet" href="{{asset('/plugins/fontawesome-free/css/all.min.css')}}">
@@ -21,7 +21,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="#" class="brand-link">
 
-      <span class="brand-text font-weight-light">Pizza Order System </span>
+      <span class="brand-text font-weight-light">My Media App </span>
     </a>
     <div class="sidebar">
       <nav class="mt-2">

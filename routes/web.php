@@ -20,6 +20,7 @@ Route::middleware([
 
     //admin
     Route::get("dashboard", [ProfileController::class,'index'])->name('dashboard');
+    Route::get('admin/update', [ProfileController::class, 'updateAdminAccount'])->name('admin#update');
 
     // admin list
     Route::get("admin/list", [ListController::class, "index"])->name("admin#list");
