@@ -10,9 +10,9 @@
             <div class="tab-content">
                 <div class="active tab-pane" id="activity">
                     {{-- alrt start  --}}
-                    @if (Session::has('updateSuccess'))
-                        <div class="alert alert-success alert-dismissible fade show">
-                            {{Session::get('updateSuccess')}}
+                    @if (Session::has('fail'))
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            {{Session::get('fail')}}
                             <button class="close"><span>&times;</span></button>
                         </div>
                     @endif
