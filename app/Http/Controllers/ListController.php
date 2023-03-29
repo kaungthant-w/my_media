@@ -20,4 +20,15 @@ class ListController extends Controller
         User::where('id', $id)->delete();
         return back()->with(['deleteSuccess'=>'User Account Deleted']);
     }
+
+    //admin list search
+    public function adminListSearch(Request $request) {
+        $userData = User::orWhere('name', 'LIKE', '%'.$request->adminListSearchKey.'%')
+        ->orWhere('email', 'LIKE', '%'. $request->adminListSearchKey.'%')
+        ->orWhere('phone', 'LIKE', '%'. $request->adminListSearchKey.'%')
+        ->orWhere('address', 'LIKE', '%'. $request->adminListSearchKey.'%')
+        ->orWhere('gender', 'LIKE', '%'. $request->adminListSearchKey.'%')
+        ->get();
+        return view('admin.list.index',compact('userData'));
+    }
 }

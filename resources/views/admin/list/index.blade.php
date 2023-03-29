@@ -16,15 +16,19 @@
         <h3 class="card-title">Admin List Table</h3>
 
         <div class="card-tools">
-          <div class="input-group input-group-sm" style="width: 150px;">
-            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
 
-            <div class="input-group-append">
-              <button type="submit" class="btn btn-default">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </div>
+          <form action="{{route('admin#listSearch')}}" method="POST">
+            @csrf
+            <div class="input-group input-group-sm" style="width: 150px;">
+                <input type="text" name="adminListSearchKey" class="form-control float-right" placeholder="Search" value="{{old('adminListSearchKey')}}">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+          </form>
+
         </div>
       </div>
       <!-- /.card-header -->
@@ -52,12 +56,15 @@
                 <td>{{$item['address']}}</td>
                 <td>{{$item['gender']}}</td>
                 <td>
-                  <a @if (count($userData) == 1)
-                     href="#"
-                    @else
-                     href="{{route('admin#accountDelete', $item['id'])}}"
-                  @endif
-                    class="btn btn-sm bg-danger text-white" disabled><i class="fas fa-trash-alt"></i></a>
+                    @if (auth()->user()->id != $item['id'])
+                        <a @if (count($userData) == 1)
+                            href="#"
+                            @else
+                            href="{{route('admin#accountDelete', $item['id'])}}"
+                            @endif
+                            class="btn btn-sm bg-danger text-white" disabled><i class="fas fa-trash-alt"></i>
+                        </a>
+                    @endif
                 </td>
               </tr>
             @endforeach
