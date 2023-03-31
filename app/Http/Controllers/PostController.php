@@ -53,6 +53,14 @@ class PostController extends Controller
         return back();
     }
 
+    //update psot
+    public function updatePostPage($id) {
+        $updatePost = Post::where("post_id", $id)->first();
+        $category = Category::get();
+        $post = Post::get();
+        return view("admin.post.update", compact(['updatePost', 'category','post']));
+    }
+
     // get post data
     private function getPostData($request, $fileName) {
         return [

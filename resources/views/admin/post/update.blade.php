@@ -7,24 +7,36 @@
                 @csrf
                 <div class="form-group">
                     <label for="">Post Name</label>
-                    <input type="text" name="postTitle" value="{{old('postTitle')}}" class="form-control" placeholder="Enter post Title">
+                    <input type="text" name="postTitle" value="{{old('postDescription',$updatePost['title'])}}" class="form-control" placeholder="Enter post Title">
                     @error('postTitle')
                         <div class="text-danger">{{$message}}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="">Description</label>
-                    <textarea name="postDescription" value="{{old('postDescription')}}" class="form-control" placeholder="Enter Post description"></textarea>
+                    <textarea name="postDescription" class="form-control" placeholder="Enter Post description">{{old('postTitle',$updatePost['description'])}}</textarea>
                     @error('postDescription')
                         <div class="text-danger">{{$message}}</div>
                     @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for=""Image</label>
+                        <input type="file" name="postImage" class="form-control mb-3" id="">
+                        <img style="width:80px;height:60px"
+                        @if ($updatePost['image'] == null) src="{{asset ('default/default.png')}}"
+                        @else
+                        src="{{asset('postImage/'.$updatePost['image'])}}"
+                        @endif>
                 </div>
                 <div class="form-group">
                     <label for="">Category</label>
                     <select name="postCategory" class="form-control" id="">
                         <option value="">Select Category</option>
                         @foreach ($category as $item)
-                            <option value="{{$item['category_id']}}">{{$item['title']}}</option>
+                            <option value="{{$item['category_id']}}"
+                            @if ($item['category_id'] == $updatePost['category_id']) selected
+                            @endif>{{$item['title']}}</option>
                         @endforeach
                     </select>
 
@@ -32,12 +44,8 @@
                         <div class="text-danger">{{$message}}</div>
                     @enderror
                 </div>
-                <div class="form-group">
-                    <label for=""Image</label>
-                    <input type="file" name="postImage" class="form-control" id="">
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    Create
+                <button type="submit" class="btn btn-outline-primary">
+                    Update
                 </button>
             </form>
         </div>
