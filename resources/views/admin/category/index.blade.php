@@ -14,7 +14,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Description</label>
-                    <textarea name="categoryDescription" class="form-control"></textarea>
+                    <textarea name="categoryDescription" class="form-control" placeholder="Enter description"></textarea>
                     @error('categoryDescription')
                         <div class="text-danger">{{$message}}</div>
                     @enderror
@@ -67,11 +67,14 @@
           <tbody>
             @foreach ($category as $item )
             <tr>
-                <td>{{$item['cateogry_id']}}</td>
+                <td>{{$item['category_id']}}</td>
                 <td>{{$item['title']}}</td>
                 <td> {{$item['description']}} </td>
                 <td>
-                  <button class="btn btn-sm bg-dark text-white"><i class="fas fa-edit"></i></button>
+                    <a href="{{route('admin#categoryEdit', $item['category_id'])}}">
+                        <button class="btn btn-sm bg-dark text-white"><i class="fas fa-edit"></i></button>
+                    </a>
+
                   <a href="{{route('admin#deleteCategory', $item['category_id'])}}" class="btn btn-sm bg-danger text-white"><i class="fas fa-trash-alt"></i></a>
                 </td>
               </tr>

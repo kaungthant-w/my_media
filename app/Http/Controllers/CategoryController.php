@@ -31,7 +31,8 @@ class CategoryController extends Controller
     //delete category
     public function deleteCategory($id) {
         Category::where('category_id', $id) -> delete();
-        return back()->with(['deleteSuccess'=> 'Category Deleted!']);
+        // return back()->with(['deleteSuccess'=> 'Category Deleted!']);
+        return redirect()->route("admin#category")->with(['deleteSuccess'=> 'Category Deleted!']);
     }
 
     //category search
@@ -39,6 +40,29 @@ class CategoryController extends Controller
         // dd($request->all());
         $category = Category::where('title', 'LIKE', '%'.$request->categorySearch.'%')->get();
         return view('admin.category.index', compact('category'));
+    }
+
+
+    //category edit
+    public function categoryEdit($id) {
+        $UpdateData = Category::where('category_id', $id)->first();
+        $category = Category::get();
+        return view("admin.category.edit",compact(["category", "UpdateData"]));
+    }
+
+    //category update
+    public function categoryUpdate($id, Request $request) {
+
+        $validator = $this->categoryValidationCheck($request);
+        if($validator->fails()) {
+            return back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        $UpdateData = $this->getUpdateData($request);
+        Category::where('category_id', $id)->update($UpdateData);
+        return redirect()->route("admin#category");
+
     }
 
     // category validation check
@@ -49,6 +73,15 @@ class CategoryController extends Controller
         ];
 
         return Validator::make($request->all(), $validationRules);
+    }
+
+    //get update data
+    private function getUpdateData($request) {
+        return [
+            'title' => $request->categoryName,
+            'description' => $request->categoryDescription,
+            'updated_at' => Carbon::now(),
+        ];
     }
 
     //get category data
