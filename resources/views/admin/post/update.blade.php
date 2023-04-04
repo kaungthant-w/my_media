@@ -3,18 +3,18 @@
 <div class="col-4">
     <div class="card">
         <div class="card-body">
-            <form action="{{route('admin#createPost')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('admin#updatePost', $updatePost['post_id'])}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="">Post Name</label>
-                    <input type="text" name="postTitle" value="{{old('postDescription',$updatePost['title'])}}" class="form-control" placeholder="Enter post Title">
+                    <input type="text" name="postTitle" value="{{old('postTitle',$updatePost['title'])}}" class="form-control" placeholder="Enter post Title">
                     @error('postTitle')
                         <div class="text-danger">{{$message}}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="">Description</label>
-                    <textarea name="postDescription" class="form-control" placeholder="Enter Post description">{{old('postTitle',$updatePost['description'])}}</textarea>
+                    <textarea name="postDescription" class="form-control" placeholder="Enter Post description">{{old('postDescription',$updatePost['description'])}}</textarea>
                     @error('postDescription')
                         <div class="text-danger">{{$message}}</div>
                     @enderror

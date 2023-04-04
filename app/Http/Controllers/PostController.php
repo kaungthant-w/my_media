@@ -53,12 +53,67 @@ class PostController extends Controller
         return back();
     }
 
-    //update psot
+    //go to update page
     public function updatePostPage($id) {
         $updatePost = Post::where("post_id", $id)->first();
         $category = Category::get();
         $post = Post::get();
         return view("admin.post.update", compact(['updatePost', 'category','post']));
+    }
+
+    // update post
+    public function updatePost($id, Request $request) {
+
+        $validator = $this->checkPostValidation($request);
+
+        if($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $data = $this->requestUpdatePostData($request);
+
+        if(isset($request->postImage)) {
+            $this->storeNewUpdateImage($id, $request, $data);
+
+        } else {
+            Post::where('post_id', $id)->update($data);
+        }
+
+        return back();
+    }
+
+    private function storeNewUpdateImage($id, $request, $data) {
+         //get from client
+         $file = $request->file('postImage');
+         $fileName = uniqid().'_'.$file -> getClientOriginalName();
+
+         //put new image to data array
+         $data['image'] = $fileName;
+
+         //get image name from database
+         $postData = Post::where('post_id', $id)->first();
+         $dbImageName = $postData['image'];
+
+         // delete image form public folder
+         if(File::exists(public_path().'/postImage/'.$dbImageName)) {
+             File::delete(public_path().'/postImage/'.$dbImageName);
+         }
+
+         //store new image under public folder
+         $file->move(public_path().'/postImage', $fileName);
+
+         //update new data with new image
+         Post::where('post_id', $id)->update($data);
+    }
+
+    // request update post data
+    private function requestUpdatePostData($request) {
+        return [
+            'title' => $request->postTitle,
+            'description' => $request->postDescription,
+            'category_id' => $request->postCategory,
+            'updated_at' => Carbon::now()
+        ];
     }
 
     // get post data

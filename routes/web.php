@@ -31,8 +31,8 @@ Route::middleware([
 
     // category
     Route::get('category', [CategoryController::class, 'index'])->name("admin#category");
-    Route::post('categor/create', [CategoryController::class, 'createCategory'])->name('admin#createCategory');
-    Route::get("categor/delete/{id}", [CategoryController::class, 'deleteCategory'])->name("admin#deleteCategory");
+    Route::post('category/create', [CategoryController::class, 'createCategory'])->name('admin#createCategory');
+    Route::get("category/delete/{id}", [CategoryController::class, 'deleteCategory'])->name("admin#deleteCategory");
     Route::post('category/search', [CategoryController::class, 'categorySearch'])->name('admin#categorySearch');
     Route::get('category/editPage/{id}', [CategoryController::class, 'categoryEdit'])->name('admin#categoryEdit');
     Route::post('category/update/{id}', [CategoryController::class, 'categoryUpdate'])->name('admin#categoryUpdate');
@@ -42,6 +42,7 @@ Route::middleware([
     Route::post('post/create', [PostController::class, 'postCreate'])->name('admin#createPost');
     Route::get('post/delete/{id}', [PostController::class, 'postDelete'])->name('admin#postDelete');
     Route::get('post/update/{id}', [PostController::class, 'updatePostPage'])->name("admin#updatePostPage");
+    Route::post('admin/updatePost/{id}', [PostController::class, 'updatePost'])->name('admin#updatePost');
 
     // trendPost
     Route::get('trendPost', [TrendPostController::class, 'index'])->name("admin#trendPost");
